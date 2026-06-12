@@ -1,14 +1,13 @@
-# Focus Forge
+# Relaxo
 
-A beginner-friendly focus planner for a first GitHub project. The app helps you add a small set of goals, choose one active task, and run a timed focus session in the browser.
+Relaxo is a cute, colorful break reminder app for desktop. It helps you focus for a while, then pops up with a gentle reminder to take a short break.
 
 ## Features
 
-- Add and remove goals for the day
-- Mark goals as complete or select one as the active task
-- Run a focus timer with start, pause, and reset controls
-- Save progress in the browser with localStorage
-- Works on desktop and mobile
+- Friendly popup reminder when it is time to rest
+- Ask again later with a custom delay
+- Soft pastel interface with a playful look
+- Simple Python/Tkinter app that runs on desktop
 
 ## Requirements
 
@@ -17,37 +16,21 @@ A beginner-friendly focus planner for a first GitHub project. The app helps you 
 ## Run
 
 ```bash
+python app.py
+```
+
+The app opens a window on your desktop.
+
+If you want the browser version instead, you can still try:
+
+```bash
 python server.py
 ```
 
-Then open `http://localhost:8000` in your browser.
-
 ## Usage
 
-1. Add a few goals for the day.
-2. Pick one goal to make it active.
-3. Set your session length and press `Start`.
-4. Use `Pause` or `Reset` if you need to stop the timer.
-5. Mark goals complete as you finish them.
-
-## GitHub Push Instructions
-
-1. Install Git on your machine if needed: https://git-scm.com/downloads
-2. Open a terminal in this folder: `c:\Users\NKailasam\Desktop\Projects`
-3. Initialize Git and commit:
-
-```bash
-git init
-git add .
-git commit -m "Initial commit"
-```
-
-4. Add your GitHub remote and push:
-
-```bash
-git remote add origin https://github.com/your-username/your-repo.git
-git branch -M main
-git push -u origin main
-```
-
-Replace `your-username` and `your-repo` with your repository details.
+1. Run the app.
+2. Set your work and break times.
+3. Keep working until the reminder appears.
+4. Click `Remind Me Later` to choose how many more minutes to wait.
+5. Click `yes, break time` when you are ready to rest.
