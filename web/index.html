@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus Forge</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="app-shell">
+        <section class="hero card">
+            <div class="hero-copy">
+                <p class="eyebrow">First GitHub Project</p>
+                <h1>Focus Forge</h1>
+                <p class="lead">Plan a few clear goals, pick one active task, and run a distraction-free focus session in the browser.</p>
+            </div>
+            <div class="hero-stats">
+                <div class="metric">
+                    <span id="goalCount">0</span>
+                    <small>Goals</small>
+                </div>
+                <div class="metric">
+                    <span id="doneCount">0</span>
+                    <small>Done</small>
+                </div>
+                <div class="metric">
+                    <span id="sessionCount">0</span>
+                    <small>Sessions</small>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid-layout">
+            <article class="card planner-card">
+                <div class="section-heading">
+                    <p class="eyebrow">Today</p>
+                    <h2>Build your focus board</h2>
+                </div>
+
+                <div class="goal-form">
+                    <input id="goalInput" type="text" maxlength="80" placeholder="Add a goal, like finish portfolio hero">
+                    <select id="categorySelect" aria-label="Goal category">
+                        <option value="Project">Project</option>
+                        <option value="Study">Study</option>
+                        <option value="Life">Life</option>
+                        <option value="Creative">Creative</option>
+                    </select>
+                    <button id="addGoalButton" class="primary-button">Add Goal</button>
+                </div>
+
+                <div class="board-toolbar">
+                    <p id="statusText" class="status-text">Ready to add your first goal.</p>
+                    <button id="resetBoardButton" class="ghost-button" type="button">Reset board</button>
+                </div>
+
+                <div id="goalList" class="goal-list" aria-live="polite"></div>
+            </article>
+
+            <article class="card timer-card">
+                <div class="section-heading">
+                    <p class="eyebrow">Session</p>
+                    <h2>Run one timed sprint</h2>
+                </div>
+
+                <label class="field-label" for="sessionMinutes">Session length</label>
+                <div class="session-controls">
+                    <input id="sessionMinutes" type="number" min="5" max="120" value="25">
+                    <span>minutes</span>
+                </div>
+
+                <div class="timer-face">
+                    <p id="activeGoalLabel" class="active-goal">No active goal selected</p>
+                    <p id="timerText" class="timer-text">25:00</p>
+                </div>
+
+                <div class="button-row">
+                    <button id="startButton" class="primary-button">Start</button>
+                    <button id="pauseButton" class="ghost-button" type="button">Pause</button>
+                    <button id="resetTimerButton" class="ghost-button" type="button">Reset</button>
+                </div>
+
+                <p id="tipText" class="tip-text">Pick one goal, then press Start to begin a clean sprint.</p>
+            </article>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
