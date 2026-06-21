@@ -48,19 +48,29 @@ function loadState() {
             sessionsCompleted: Number(saved.sessionsCompleted) || 0,
             isRunning: false,
         };
-    } catch {
+    } catch (error) {
+        console.error('Error loading state from localStorage:', error);
         return structuredClone(defaultState);
     }
 }
 
 function saveState() {
-    localStorage.setItem(storageKey, JSON.stringify({
-        goals: state.goals,
-        activeGoalId: state.activeGoalId,
-        sessionMinutes: state.sessionMinutes,
-        remainingSeconds: state.remainingSeconds,
-        sessionsCompleted: state.sessionsCompleted,
-    }));
+    try {
+        localStorage.setItem(storageKey, JSON.stringify({
+            goals: state.goals,
+            activeGoalId: state.activeGoalId,
+            sessionMinutes: state.sessionMinutes,
+            remainingSeconds: state.remainingSeconds,
+            sessionsCompleted: state.sessionsCompleted,
+        }));
+    } catch (error) {
+        console.error('Error saving state to localStorage:', error);
+        if (error.name === 'QuotaExceededError') {
+            setStatus('Storage quota exceeded. Some data may not be saved.');
+        } else {
+            setStatus('Error saving progress.');
+        }
+    }
 }
 
 function formatTime(totalSeconds) {
@@ -312,4 +322,21 @@ window.addEventListener('beforeunload', () => {
     saveState();
 });
 
-updateView();
+// Error handling
+window.addEventListener('error', (event) => {
+    console.error('Global error:', event.error);
+    setStatus('An error occurred. Please refresh the page.');
+});
+
+window.addEventListener('unhandledrejection', (event) => {
+    console.error('Unhandled promise rejection:', event.reason);
+    setStatus('An error occurred. Please refresh the page.');
+});
+
+// Initialize app
+try {
+    updateView();
+} catch (error) {
+    console.error('Failed to initialize app:', error);
+    setStatus('Failed to initialize app. Please refresh the page.');
+}

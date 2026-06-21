@@ -1,36 +1,124 @@
-# Relaxo
+# Relaxo - Focus & Break Timer
 
-Relaxo is a cute, colorful break reminder app for desktop. It helps you focus for a while, then pops up with a gentle reminder to take a short break.
+A gentle, colorful focus timer app that helps you stay productive with timed work sessions and break reminders.
 
 ## Features
 
-- Friendly popup reminder when it is time to rest
-- Ask again later with a custom delay
-- Soft pastel interface with a playful look
-- Simple Python/Tkinter app that runs on desktop
+- **Focus Buddy (app.py)**: Desktop break reminder with customizable work/break intervals
+- **Relaxo (web/)**: Web-based goal tracker with timed focus sessions
+- Pastel UI with encouraging messages
+- Local storage for goal persistence
+- Session tracking and statistics
 
-## Requirements
+## Quick Start
 
-- Python 3.x
+### Prerequisites
 
-## Run
+- Python 3.8+
+- Node.js (optional, for frontend development)
 
+### Installation
+
+1. Clone the repository:
 ```bash
-python app.py
+git clone https://github.com/nkcrafts/Relaxo.git
+cd Relaxo
 ```
 
-The app opens a window on your desktop.
+2. Create a virtual environment:
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
 
-If you want the browser version instead, you can still try:
+3. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
 
+### Running Locally
+
+**Web Server (Relaxo):**
 ```bash
 python server.py
 ```
+Opens http://localhost:8000 in your browser.
 
-## Usage
+**Desktop App (Focus Buddy):**
+```bash
+python app.py
+```
+Customize work/break times when prompted.
 
-1. Run the app.
-2. Set your work and break times.
-3. Keep working until the reminder appears.
-4. Click `Remind Me Later` to choose how many more minutes to wait.
-5. Click `yes, break time` when you are ready to rest.
+## Production Deployment
+
+### Using Docker
+
+Build and run with Docker:
+```bash
+docker build -t relaxo .
+docker run -p 8000:8000 relaxo
+```
+
+### Environment Variables
+
+Configure via `.env` file:
+```
+PORT=8000
+HOST=0.0.0.0
+WEB_FOLDER=web
+ENVIRONMENT=production
+DEBUG=false
+```
+
+### Deployment Options
+
+- **Heroku**: `git push heroku main`
+- **Railway**: Connect GitHub repo to Railway
+- **Docker Hub**: Push image to registry
+- **VPS**: Run Docker container on your server
+
+## Project Structure
+
+```
+├── app.py                 # Desktop break reminder app
+├── server.py             # Web server
+├── index.html            # HTML entry point
+├── web/
+│   ├── index.html        # Web app HTML
+│   ├── script.js         # Main app logic
+│   └── styles.css        # Styling
+├── requirements.txt      # Python dependencies
+├── Dockerfile            # Docker configuration
+└── .env                  # Environment variables
+```
+
+## Security Notes
+
+- Uses localStorage for client-side data storage
+- No server-side authentication required for local use
+- For multi-user deployments, implement authentication
+- Validate all user inputs
+- Use HTTPS in production
+
+## Browser Support
+
+- Chrome/Edge 90+
+- Firefox 88+
+- Safari 14+
+
+## Development
+
+To set up development environment:
+```bash
+pip install -r requirements.txt
+# Run with DEBUG=true in .env
+```
+
+## License
+
+MIT
+
+## Author
+
+Created with 💖 for focused, cozy work sessions.

@@ -2,25 +2,51 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
-# Distribution / packaging
+*.so
 .Python
-env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
 venv/
 ENV/
-build/
-dist/
-.eggs/
-*.egg-info/
+env/
+.venv
 
-# IDEs and editors
+# IDE
 .vscode/
+.idea/
 *.swp
 *.swo
+*~
+
+# Environment
+.env
+.env.local
 
 # Logs
+logs/
 *.log
 
-# OS files
+# OS
 .DS_Store
 Thumbs.db
+
+# Node modules (if used)
+node_modules/

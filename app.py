@@ -1,5 +1,24 @@
 import tkinter as tk
 from tkinter import messagebox, simpledialog
+import logging
+import sys
+from pathlib import Path
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('logs/app.log'),
+        logging.StreamHandler(sys.stdout)
+    ]
+)
+logger = logging.getLogger(__name__)
+
+# Create logs directory if it doesn't exist
+Path('logs').mkdir(exist_ok=True)
+
+logger.info("Starting Focus Buddy application")
 
 # These are the values we use for the timing.
 work_time_minutes = 60
@@ -27,27 +46,33 @@ PALETTE = {
 
 def ask_number(title, question, default):
     """Ask the user for a number. If they cancel, return the default."""
-    value = simpledialog.askinteger(title, question, initialvalue=default, minvalue=1)
-    if value is None:
+    try:
+        value = simpledialog.askinteger(title, question, initialvalue=default, minvalue=1)
+        if value is None:
+            return default
+        logger.info(f"User set {title.lower()}: {value} minutes")
+        return value
+    except Exception as e:
+        logger.error(f"Error in ask_number: {e}")
         return default
-    return value
 
 
 def start_app():
     """Start the application and ask for the work/break times."""
     global work_time_minutes, break_time_minutes
+    
+    try:
+        root = tk.Tk()
+        root.title("Focus Buddy ✿")
+        root.configure(bg=PALETTE["bg"])
+        root.geometry("420x320")
+        root.resizable(False, False)
 
-    root = tk.Tk()
-    root.title("Focus Buddy ✿")
-    root.configure(bg=PALETTE["bg"])
-    root.geometry("420x320")
-    root.resizable(False, False)
-
-    canvas = tk.Canvas(root, width=420, height=320, bg=PALETTE["bg"], highlightthickness=0)
-    canvas.pack(fill="both", expand=True)
-    canvas.create_oval(-40, -40, 130, 130, fill=PALETTE["mint"], outline=PALETTE["mint"])
-    canvas.create_oval(310, -10, 470, 150, fill=PALETTE["sky"], outline=PALETTE["sky"])
-    canvas.create_oval(285, 225, 455, 395, fill=PALETTE["sun"], outline=PALETTE["sun"])
+        canvas = tk.Canvas(root, width=420, height=320, bg=PALETTE["bg"], highlightthickness=0)
+        canvas.pack(fill="both", expand=True)
+        canvas.create_oval(-40, -40, 130, 130, fill=PALETTE["mint"], outline=PALETTE["mint"])
+        canvas.create_oval(310, -10, 470, 150, fill=PALETTE["sky"], outline=PALETTE["sky"])
+        canvas.create_oval(285, 225, 455, 395, fill=PALETTE["sun"], outline=PALETTE["sun"])
 
     card = tk.Frame(
         root,
@@ -108,8 +133,15 @@ def start_app():
         5,
     )
 
-    root.after(100, lambda: start_work_timer(root))
-    root.mainloop()
+        root.after(100, lambda: start_work_timer(root))
+        root.mainloop()
+        logger.info("Application closed")
+    except tk.TclError as e:
+        logger.error(f"Tkinter error: {e}", exc_info=True)
+        raise
+    except Exception as e:
+        logger.error(f"Unexpected error in start_app: {e}", exc_info=True)
+        raise
 
 
 def start_work_timer(root):
@@ -324,13 +356,22 @@ def extend_break():
 def finish_break(parent):
     """Close the break window and end the program."""
     global break_window
-    if break_window is not None:
-        break_window.destroy()
-        break_window = None
+    try:
+        if break_window is not None:
+            break_window.destroy()
+            break_window = None
 
-    messagebox.showinfo("Break finished", "Your break is over. You can return to work now.")
-    parent.quit()
+        messagebox.showinfo("Break finished", "Your break is over. You can return to work now.")
+        parent.quit()
+    except Exception as e:
+        logger.error(f"Error finishing break: {e}")
+        parent.quit()
 
 
 if __name__ == "__main__":
-    start_app()
+    try:
+        start_app()
+    except Exception as e:
+        logger.error(f"Application error: {e}", exc_info=True)
+        messagebox.showerror("Error", f"An error occurred: {e}")
+        sys.exit(1)

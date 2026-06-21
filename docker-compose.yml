@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  relaxo:
+    build: .
+    container_name: relaxo-app
+    ports:
+      - "8000:8000"
+    environment:
+      PORT: 8000
+      HOST: 0.0.0.0
+      ENVIRONMENT: production
+      DEBUG: 'false'
+    volumes:
+      - ./logs:/app/logs
+    restart: unless-stopped
